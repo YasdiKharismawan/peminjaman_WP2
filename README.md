@@ -1,2 +1,1 @@
-# peminjaman_WP2
-Latihan modul WEB PROGRAMMING 2
+# Aplikasi_Peminjaman_Buku
