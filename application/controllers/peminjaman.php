@@ -82,4 +82,39 @@ class Peminjaman extends CI_Controller
         $data['buku'] = $this->M_peminjaman->pencarianbuku($cari)->result();
         $this->load->view('peminjaman/pencarianbuku', $data);
     }
+
+    function pengembalian()
+    {
+        $id_peminjaman = $this->input->post('id_peminjaman');
+        $data['peminjaman'] = $this->M_peminjaman->getPeminjamanById($id_peminjaman)->row();
+
+        if ($data['peminjaman']) {
+            $data['title'] = "Form Pengembalian";
+            $this->template->display('peminjaman/pengembalian', $data);
+        } else {
+            echo "Data peminjaman tidak ditemukan.";
+        }
+    }
+
+    function proses_pengembalian()
+    {
+        $id_peminjaman = $this->input->post('id_peminjaman');
+        $tanggal_kembali = $this->input->post('tanggal_kembali');
+
+        $peminjaman = $this->M_peminjaman->getPeminjamanById($id_peminjaman)->row();
+
+        if ($peminjaman) {
+            $info = array(
+                'tanggal_kembali' => $tanggal_kembali,
+                'status' => 'Y'
+            );
+
+            $this->M_peminjaman->updatePeminjaman($id_peminjaman, $info);
+
+            echo "Pengembalian berhasil.";
+        } else {
+            echo "Data peminjaman tidak ditemukan.";
+        }
+    }
+
 }
